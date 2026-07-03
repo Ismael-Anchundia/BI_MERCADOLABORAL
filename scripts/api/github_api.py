@@ -1,3 +1,24 @@
+"""
+==========================================================
+GITHUB API
+==========================================================
+
+Descripción:
+Este script consume la API pública de GitHub para obtener información de los repositorios más populares
+relacionados con el término "software".
+
+La información obtenida se almacena directamente en la zona Raw del proyecto sin realizar modificaciones,
+preservando la integridad de los datos originales.
+
+Entradas:
+- GitHub REST API
+
+Salidas:
+- github_YYYY-MM-DD.json almacenado en:
+  data/raw/api/github/
+==========================================================
+"""
+
 import os
 import sys
 import time
@@ -26,6 +47,10 @@ PARAMS = {
 # ============================================================
 
 def obtener_repositorios():
+    """
+    Realiza la petición HTTP GET hacia la API de GitHub utilizando los parámetros configurados.
+    Retorna el contenido de la respuesta en formato JSON.
+    """
 
     respuesta = requests.get(
         URL,
@@ -43,6 +68,10 @@ def obtener_repositorios():
 # ============================================================
 
 def procesar_repositorios(datos_api):
+    """
+    Extrae únicamente los atributos de interés de cada repositorio para el análisis de tendencias
+    tecnológicas.
+    """
 
     repositorios = []
 
@@ -71,10 +100,13 @@ def procesar_repositorios(datos_api):
     return repositorios
 
 # ============================================================
-# MAIN
+# PROGRAMA PRINCIPAL
 # ============================================================
 
 def main():
+    """
+    Ejecuta el proceso completo de extracción desde la API de GitHub y almacena el resultado en la zona Raw.
+    """
 
     try:
 
