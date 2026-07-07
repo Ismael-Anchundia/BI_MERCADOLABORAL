@@ -1,0 +1,14 @@
+﻿control,campo,total_registros,registros_afectados,porcentaje,estrategia
+Duplicados,titulo_oferta + empresa + ciudad + fuente,120,0,0.0,Mantener el primer registro detectado y eliminar repeticiones posteriores.
+Control de nulos,titulo_oferta,120,0,0.0,Campo crítico: eliminar o revisar manualmente si está vacío.
+Control de nulos,empresa,120,74,61.67,Mantener como No especificado si la fuente no lo publica.
+Control de nulos,ciudad,120,0,0.0,Inferir posteriormente desde descripción o fuente si aplica.
+Control de nulos,fecha_publicacion,120,11,9.17,Mantener como pendiente si no se pudo interpretar desde Raw.
+Control de nulos,url_oferta,120,11,9.17,Campo crítico: eliminar o revisar manualmente si está vacío.
+Control de nulos,fuente,120,0,0.0,Campo crítico: eliminar o revisar manualmente si está vacío.
+Control de nulos,categoria_rol,120,0,0.0,Mantener categoría calculada o asignar Otros.
+Formatos y casting,salario_usd,120,63,52.5,Conversión de strings salariales a valores numéricos float en USD.
+Salarios no especificados,salario_usd,120,57,47.5,Mantener como nulo cuando la fuente no publica salario.
+Estandarización de fechas,fecha_publicacion,120,109,90.83,Conversión a formato ANSI YYYY-MM-DD.
+Estandarización estricta,categoria_rol,120,7,100.0,Homogeneización de cargos en categorías maestras.
+Homologación inter-fuentes,fuente,120,5,100.0,Integración de fuentes heterogéneas bajo un esquema común.

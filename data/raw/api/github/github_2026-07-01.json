@@ -1,0 +1,202 @@
+[
+    {
+        "nombre": "public-apis",
+        "propietario": "public-apis",
+        "lenguaje": "Python",
+        "estrellas": 445465,
+        "forks": 48893,
+        "creado": "2016-03-20T23:49:42Z",
+        "actualizado": "2026-07-01T05:13:25Z",
+        "url": "https://github.com/public-apis/public-apis"
+    },
+    {
+        "nombre": "coding-interview-university",
+        "propietario": "jwasham",
+        "lenguaje": null,
+        "estrellas": 354689,
+        "forks": 84027,
+        "creado": "2016-06-06T02:34:12Z",
+        "actualizado": "2026-07-01T05:12:14Z",
+        "url": "https://github.com/jwasham/coding-interview-university"
+    },
+    {
+        "nombre": "awesome-selfhosted",
+        "propietario": "awesome-selfhosted",
+        "lenguaje": null,
+        "estrellas": 302105,
+        "forks": 14076,
+        "creado": "2015-06-01T02:33:17Z",
+        "actualizado": "2026-07-01T05:03:59Z",
+        "url": "https://github.com/awesome-selfhosted/awesome-selfhosted"
+    },
+    {
+        "nombre": "superpowers",
+        "propietario": "obra",
+        "lenguaje": "Shell",
+        "estrellas": 242728,
+        "forks": 21538,
+        "creado": "2025-10-09T19:45:18Z",
+        "actualizado": "2026-07-01T05:14:59Z",
+        "url": "https://github.com/obra/superpowers"
+    },
+    {
+        "nombre": "awesome-go",
+        "propietario": "avelino",
+        "lenguaje": "Go",
+        "estrellas": 176833,
+        "forks": 13366,
+        "creado": "2014-07-06T13:42:15Z",
+        "actualizado": "2026-07-01T04:31:55Z",
+        "url": "https://github.com/avelino/awesome-go"
+    },
+    {
+        "nombre": "tech-interview-handbook",
+        "propietario": "yangshun",
+        "lenguaje": "TypeScript",
+        "estrellas": 140534,
+        "forks": 16645,
+        "creado": "2016-07-05T05:00:48Z",
+        "actualizado": "2026-07-01T05:01:06Z",
+        "url": "https://github.com/yangshun/tech-interview-handbook"
+    },
+    {
+        "nombre": "rust",
+        "propietario": "rust-lang",
+        "lenguaje": "Rust",
+        "estrellas": 114169,
+        "forks": 15057,
+        "creado": "2010-06-16T20:39:03Z",
+        "actualizado": "2026-07-01T05:06:46Z",
+        "url": "https://github.com/rust-lang/rust"
+    },
+    {
+        "nombre": "awesome-mac",
+        "propietario": "jaywcjlove",
+        "lenguaje": "Swift",
+        "estrellas": 106533,
+        "forks": 7959,
+        "creado": "2016-07-17T15:33:47Z",
+        "actualizado": "2026-07-01T05:05:12Z",
+        "url": "https://github.com/jaywcjlove/awesome-mac"
+    },
+    {
+        "nombre": "every-programmer-should-know",
+        "propietario": "mtdvio",
+        "lenguaje": null,
+        "estrellas": 99987,
+        "forks": 8775,
+        "creado": "2017-08-24T13:18:26Z",
+        "actualizado": "2026-07-01T04:31:59Z",
+        "url": "https://github.com/mtdvio/every-programmer-should-know"
+    },
+    {
+        "nombre": "obs-studio",
+        "propietario": "obsproject",
+        "lenguaje": "C",
+        "estrellas": 73571,
+        "forks": 9393,
+        "creado": "2013-10-01T02:40:31Z",
+        "actualizado": "2026-07-01T04:54:23Z",
+        "url": "https://github.com/obsproject/obs-studio"
+    },
+    {
+        "nombre": "awesome-machine-learning",
+        "propietario": "josephmisiti",
+        "lenguaje": "Python",
+        "estrellas": 73130,
+        "forks": 15526,
+        "creado": "2014-07-15T19:11:19Z",
+        "actualizado": "2026-07-01T03:17:07Z",
+        "url": "https://github.com/josephmisiti/awesome-machine-learning"
+    },
+    {
+        "nombre": "ghidra",
+        "propietario": "NationalSecurityAgency",
+        "lenguaje": "Java",
+        "estrellas": 70314,
+        "forks": 7712,
+        "creado": "2019-03-01T03:27:48Z",
+        "actualizado": "2026-07-01T05:15:20Z",
+        "url": "https://github.com/NationalSecurityAgency/ghidra"
+    },
+    {
+        "nombre": "MetaGPT",
+        "propietario": "FoundationAgents",
+        "lenguaje": "Python",
+        "estrellas": 69129,
+        "forks": 8812,
+        "creado": "2023-06-30T09:04:55Z",
+        "actualizado": "2026-07-01T04:36:55Z",
+        "url": "https://github.com/FoundationAgents/MetaGPT"
+    },
+    {
+        "nombre": "gitea",
+        "propietario": "go-gitea",
+        "lenguaje": "Go",
+        "estrellas": 56612,
+        "forks": 6856,
+        "creado": "2016-11-01T02:13:26Z",
+        "actualizado": "2026-07-01T03:45:18Z",
+        "url": "https://github.com/go-gitea/gitea"
+    },
+    {
+        "nombre": "faceswap",
+        "propietario": "deepfakes",
+        "lenguaje": "Python",
+        "estrellas": 55328,
+        "forks": 13367,
+        "creado": "2017-12-19T09:44:13Z",
+        "actualizado": "2026-07-01T04:48:48Z",
+        "url": "https://github.com/deepfakes/faceswap"
+    },
+    {
+        "nombre": "jellyfin",
+        "propietario": "jellyfin",
+        "lenguaje": "C#",
+        "estrellas": 53849,
+        "forks": 5050,
+        "creado": "2018-12-09T06:36:45Z",
+        "actualizado": "2026-07-01T04:32:11Z",
+        "url": "https://github.com/jellyfin/jellyfin"
+    },
+    {
+        "nombre": "professional-programming",
+        "propietario": "charlax",
+        "lenguaje": "Python",
+        "estrellas": 51211,
+        "forks": 3998,
+        "creado": "2015-11-07T05:07:52Z",
+        "actualizado": "2026-06-30T23:22:57Z",
+        "url": "https://github.com/charlax/professional-programming"
+    },
+    {
+        "nombre": "awesome-java",
+        "propietario": "akullpp",
+        "lenguaje": null,
+        "estrellas": 48348,
+        "forks": 7687,
+        "creado": "2014-07-09T10:12:43Z",
+        "actualizado": "2026-07-01T02:46:50Z",
+        "url": "https://github.com/akullpp/awesome-java"
+    },
+    {
+        "nombre": "awesome-design-patterns",
+        "propietario": "DovAmir",
+        "lenguaje": null,
+        "estrellas": 47994,
+        "forks": 3276,
+        "creado": "2018-06-04T17:47:48Z",
+        "actualizado": "2026-07-01T00:28:41Z",
+        "url": "https://github.com/DovAmir/awesome-design-patterns"
+    },
+    {
+        "nombre": "Umi-OCR",
+        "propietario": "hiroi-sora",
+        "lenguaje": "Python",
+        "estrellas": 45703,
+        "forks": 4494,
+        "creado": "2022-03-28T04:01:46Z",
+        "actualizado": "2026-07-01T04:56:14Z",
+        "url": "https://github.com/hiroi-sora/Umi-OCR"
+    }
+]
