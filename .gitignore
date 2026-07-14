@@ -24,3 +24,5 @@ __pycache__/
 # Archivos grandes
 # ============================
 data/raw/archivos/stackoverflow/survey_results_public.csv
+
+.streamlit/secrets.toml
