@@ -1,7 +1,5 @@
-requests
-beautifulsoup4
-playwright
+streamlit
 pandas
-lxml
-python-dateutil
-openpyxl
+plotly
+SQLAlchemy
+psycopg2-binary

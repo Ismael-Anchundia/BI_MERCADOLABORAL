@@ -22,11 +22,18 @@ pagina_analisis = st.Page(
     icon="📈",
 )
 
+pagina_insights = st.Page(
+    "vistas/insights.py",
+    title="Insights",
+    icon="💡",
+)
+
 navegacion = st.navigation(
     {
         "Dashboard": [
             pagina_resumen,
             pagina_analisis,
+            pagina_insights,
         ]
     }
 )

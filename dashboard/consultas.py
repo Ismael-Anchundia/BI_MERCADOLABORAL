@@ -491,3 +491,317 @@ def obtener_salario_promedio_por_rol(
         ttl=300,
         params=parametros,
     )
+
+#Segunda pestaña
+def obtener_salario_promedio_por_ciudad(
+    anio=None,
+    pais=None,
+    modalidad=None,
+    limite: int = 10,
+) -> pd.DataFrame:
+    condiciones = [
+        "fo.salario_usd IS NOT NULL",
+        "dc.ciudad IS NOT NULL",
+        "dc.ciudad <> 'No especificado'",
+    ]
+
+    parametros = {
+        "limite": int(limite),
+    }
+
+    if anio not in (None, "Todos"):
+        condiciones.append("dt.anio = :anio")
+        parametros["anio"] = int(anio)
+
+    if pais not in (None, "Todos"):
+        condiciones.append("dc.pais = :pais")
+        parametros["pais"] = pais
+
+    if modalidad not in (None, "Todas"):
+        condiciones.append("dm.modalidad = :modalidad")
+        parametros["modalidad"] = modalidad
+
+    clausula_where = "WHERE " + " AND ".join(condiciones)
+
+    consulta = f"""
+        SELECT
+            dc.ciudad,
+            ROUND(
+                AVG(fo.salario_usd),
+                2
+            ) AS salario_promedio,
+            COUNT(*) AS total_ofertas
+        FROM dw_ofertas.fact_ofertas_laborales fo
+        JOIN dw_ofertas.dim_ciudad dc
+            ON fo.id_ciudad = dc.id_ciudad
+        JOIN dw_ofertas.dim_tiempo dt
+            ON fo.id_tiempo = dt.id_tiempo
+        JOIN dw_ofertas.dim_modalidad dm
+            ON fo.id_modalidad = dm.id_modalidad
+        {clausula_where}
+        GROUP BY dc.ciudad
+        ORDER BY salario_promedio DESC
+        LIMIT :limite;
+    """
+
+    return ejecutar_consulta(
+        consulta,
+        ttl=300,
+        params=parametros,
+    )
+
+def obtener_tecnologias_por_modalidad(
+    anio=None,
+    pais=None,
+    modalidad=None,
+    limite: int = 12,
+) -> pd.DataFrame:
+    condiciones = [
+        "dtec.nombre_tecnologia <> 'No especificado'"
+    ]
+
+    parametros = {
+        "limite": int(limite),
+    }
+
+    if anio not in (None, "Todos"):
+        condiciones.append("dt.anio = :anio")
+        parametros["anio"] = int(anio)
+
+    if pais not in (None, "Todos"):
+        condiciones.append("dc.pais = :pais")
+        parametros["pais"] = pais
+
+    if modalidad not in (None, "Todas"):
+        condiciones.append("dm.modalidad = :modalidad")
+        parametros["modalidad"] = modalidad
+
+    clausula_where = "WHERE " + " AND ".join(condiciones)
+
+    consulta = f"""
+        SELECT
+            dtec.nombre_tecnologia,
+            dm.modalidad,
+            COUNT(fo.id_hecho) AS total_ofertas
+        FROM dw_ofertas.fact_ofertas_laborales fo
+        JOIN dw_ofertas.dim_tecnologia dtec
+            ON fo.id_tecnologia = dtec.id_tecnologia
+        JOIN dw_ofertas.dim_modalidad dm
+            ON fo.id_modalidad = dm.id_modalidad
+        JOIN dw_ofertas.dim_tiempo dt
+            ON fo.id_tiempo = dt.id_tiempo
+        JOIN dw_ofertas.dim_ciudad dc
+            ON fo.id_ciudad = dc.id_ciudad
+        {clausula_where}
+        GROUP BY
+            dtec.nombre_tecnologia,
+            dm.modalidad
+        ORDER BY total_ofertas DESC
+        LIMIT :limite;
+    """
+
+    return ejecutar_consulta(
+        consulta,
+        ttl=300,
+        params=parametros,
+    )
+
+def obtener_ofertas_por_categoria_rol(
+    anio=None,
+    pais=None,
+    modalidad=None,
+) -> pd.DataFrame:
+    condiciones = []
+    parametros = {}
+
+    if anio not in (None, "Todos"):
+        condiciones.append("dt.anio = :anio")
+        parametros["anio"] = int(anio)
+
+    if pais not in (None, "Todos"):
+        condiciones.append("dc.pais = :pais")
+        parametros["pais"] = pais
+
+    if modalidad not in (None, "Todas"):
+        condiciones.append("dm.modalidad = :modalidad")
+        parametros["modalidad"] = modalidad
+
+    clausula_where = ""
+
+    if condiciones:
+        clausula_where = (
+            "WHERE " + " AND ".join(condiciones)
+        )
+
+    consulta = f"""
+        SELECT
+            dr.categoria_rol,
+            COUNT(fo.id_hecho) AS total_ofertas
+        FROM dw_ofertas.fact_ofertas_laborales fo
+        JOIN dw_ofertas.dim_rol dr
+            ON fo.id_rol = dr.id_rol
+        JOIN dw_ofertas.dim_tiempo dt
+            ON fo.id_tiempo = dt.id_tiempo
+        JOIN dw_ofertas.dim_ciudad dc
+            ON fo.id_ciudad = dc.id_ciudad
+        JOIN dw_ofertas.dim_modalidad dm
+            ON fo.id_modalidad = dm.id_modalidad
+        {clausula_where}
+        GROUP BY dr.categoria_rol
+        ORDER BY total_ofertas DESC;
+    """
+
+    return ejecutar_consulta(
+        consulta,
+        ttl=300,
+        params=parametros,
+    )
+
+def obtener_detalle_ofertas(
+    anio=None,
+    pais=None,
+    modalidad=None,
+    limite: int = 100,
+) -> pd.DataFrame:
+    condiciones = []
+    parametros = {
+        "limite": int(limite),
+    }
+
+    if anio not in (None, "Todos"):
+        condiciones.append("dt.anio = :anio")
+        parametros["anio"] = int(anio)
+
+    if pais not in (None, "Todos"):
+        condiciones.append("dc.pais = :pais")
+        parametros["pais"] = pais
+
+    if modalidad not in (None, "Todas"):
+        condiciones.append("dm.modalidad = :modalidad")
+        parametros["modalidad"] = modalidad
+
+    clausula_where = ""
+
+    if condiciones:
+        clausula_where = (
+            "WHERE " + " AND ".join(condiciones)
+        )
+
+    consulta = f"""
+        SELECT
+            dt.fecha,
+            dc.pais,
+            dc.ciudad,
+            dr.categoria_rol,
+            dr.nombre_rol,
+            dm.modalidad,
+            dtec.nombre_tecnologia,
+            fo.salario_usd,
+            fo.experiencia_anios,
+            fo.num_vacantes
+        FROM dw_ofertas.fact_ofertas_laborales fo
+        JOIN dw_ofertas.dim_tiempo dt
+            ON fo.id_tiempo = dt.id_tiempo
+        JOIN dw_ofertas.dim_ciudad dc
+            ON fo.id_ciudad = dc.id_ciudad
+        JOIN dw_ofertas.dim_rol dr
+            ON fo.id_rol = dr.id_rol
+        JOIN dw_ofertas.dim_modalidad dm
+            ON fo.id_modalidad = dm.id_modalidad
+        JOIN dw_ofertas.dim_tecnologia dtec
+            ON fo.id_tecnologia = dtec.id_tecnologia
+        {clausula_where}
+        ORDER BY dt.fecha DESC
+        LIMIT :limite;
+    """
+
+    return ejecutar_consulta(
+        consulta,
+        ttl=300,
+        params=parametros,
+    )
+
+def obtener_rol_mejor_pagado() -> tuple[str, float, int]:
+    consulta = """
+        SELECT
+            dr.categoria_rol,
+            ROUND(AVG(fo.salario_usd), 2) AS salario_promedio,
+            COUNT(*) AS total_ofertas
+        FROM dw_ofertas.fact_ofertas_laborales fo
+        JOIN dw_ofertas.dim_rol dr
+            ON fo.id_rol = dr.id_rol
+        WHERE fo.salario_usd IS NOT NULL
+        GROUP BY dr.categoria_rol
+        ORDER BY salario_promedio DESC
+        LIMIT 1;
+    """
+
+    resultado = ejecutar_consulta(
+        consulta,
+        ttl=300,
+    )
+
+    if resultado.empty:
+        return "No disponible", 0.0, 0
+
+    return (
+        str(resultado.iloc[0]["categoria_rol"]),
+        float(resultado.iloc[0]["salario_promedio"]),
+        int(resultado.iloc[0]["total_ofertas"]),
+    )
+
+
+def obtener_mayor_crecimiento_mensual() -> tuple[str, float]:
+    consulta = """
+        WITH ofertas_mensuales AS (
+            SELECT
+                dt.anio,
+                dt.mes,
+                COUNT(fo.id_hecho) AS total_ofertas
+            FROM dw_ofertas.fact_ofertas_laborales fo
+            JOIN dw_ofertas.dim_tiempo dt
+                ON fo.id_tiempo = dt.id_tiempo
+            GROUP BY
+                dt.anio,
+                dt.mes
+        ),
+        variaciones AS (
+            SELECT
+                anio,
+                mes,
+                total_ofertas,
+                LAG(total_ofertas) OVER (
+                    ORDER BY anio, mes
+                ) AS ofertas_mes_anterior
+            FROM ofertas_mensuales
+        )
+        SELECT
+            TO_CHAR(
+                MAKE_DATE(anio, mes, 1),
+                'YYYY-MM'
+            ) AS periodo,
+            ROUND(
+                (
+                    total_ofertas - ofertas_mes_anterior
+                ) * 100.0
+                / NULLIF(ofertas_mes_anterior, 0),
+                2
+            ) AS crecimiento_porcentual
+        FROM variaciones
+        WHERE ofertas_mes_anterior IS NOT NULL
+        ORDER BY crecimiento_porcentual DESC
+        LIMIT 1;
+    """
+
+    resultado = ejecutar_consulta(
+        consulta,
+        ttl=300,
+    )
+
+    if resultado.empty:
+        return "No disponible", 0.0
+
+    return (
+        str(resultado.iloc[0]["periodo"]),
+        float(resultado.iloc[0]["crecimiento_porcentual"]),
+    )

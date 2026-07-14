@@ -36,7 +36,7 @@ st.markdown(
     }
 
     h1 span {
-        color: #3b82f6;
+        color: #ffffff;
     }
 
     /* Subtítulos */
@@ -135,15 +135,10 @@ st.markdown(
 
     /* Contenedor de gráficos */
     [data-testid="stPlotlyChart"] {
-        background: linear-gradient(
-            145deg,
-            #261b43,
-            #1b1432
-        );
-        border: 1px solid rgba(167, 139, 250, 0.24);
-        border-radius: 14px;
-        padding: 0.75rem;
-        box-shadow: 0 12px 32px rgba(5, 2, 15, 0.34);
+        background: transparent;
+        border: none;
+        padding: 0;
+        box-shadow: none;
     }
 
     /* Cajas informativas */
@@ -430,17 +425,15 @@ if probar_conexion():
                 height=430,
                 xaxis_title="Participación sobre las ofertas filtradas (%)",
                 yaxis_title=None,
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font_color="#EDE9FE",
                 margin=dict(
                     l=20,
                     r=50,
                     t=20,
                     b=20,
                 ),
-            )
-
-            figura_tecnologias = aplicar_estilo_grafico(
-                figura_tecnologias,
-                altura=430,
             )
 
             st.plotly_chart(
@@ -493,11 +486,6 @@ if probar_conexion():
                  plot_bgcolor="rgba(0,0,0,0)",
             )
 
-            figura_modalidades = aplicar_estilo_grafico(
-                figura_modalidades,
-                altura=430,
-            )
-
             st.plotly_chart(
                 figura_modalidades,
                 use_container_width=True,
@@ -519,12 +507,24 @@ if probar_conexion():
                 fila_modalidad_principal["porcentaje"]
             )
 
-            st.info(
-                f"La modalidad predominante es "
-                f"**{modalidad_principal_grafico}**, con "
-                f"**{total_modalidad_principal} ofertas**, equivalentes al "
-                f"**{porcentaje_modalidad_principal:.2f}%** del total "
-                f"para el año y país seleccionados."
+            st.markdown(
+                f"""
+                <div style="
+                    padding:12px;
+                    border-left:4px solid #8B5CF6;
+                    background:rgba(139,92,246,0.08);
+                    border-radius:8px;
+                    margin-top:8px;
+                ">
+                    <b>Insight:</b><br>
+                    La modalidad predominante es
+                    <b>{modalidad_principal_grafico}</b>,
+                    representando
+                    <b>{porcentaje_modalidad_principal:.2f}%</b>
+                    del total.
+                </div>
+                """,
+                unsafe_allow_html=True,
             )
 
 
@@ -539,49 +539,48 @@ if probar_conexion():
     else:
         participacion_ciudades = participacion_ciudades.sort_values(
             by="porcentaje_participacion",
-            ascending=True,
+            ascending=False,
         )
 
         figura_ciudades = px.bar(
             participacion_ciudades,
-            x="porcentaje_participacion",
-            y="ciudad",
-            orientation="h",
+            x="ciudad",
+            y="porcentaje_participacion",
             text="porcentaje_participacion",
             custom_data=["total_ofertas"],
             labels={
-                "porcentaje_participacion": "Participación (%)",
                 "ciudad": "Ciudad",
+                "porcentaje_participacion": "Participación (%)",
             },
         )
 
+        
         figura_ciudades.update_traces(
             texttemplate="%{text:.2f}%",
             textposition="outside",
             hovertemplate=(
-                "<b>%{y}</b><br>"
+                "<b>%{x}</b><br>"
                 "Ofertas: %{customdata[0]}<br>"
-                "Participación: %{x:.2f}%"
+                "Participación: %{y:.2f}%"
                 "<extra></extra>"
             ),
         )
 
         figura_ciudades.update_layout(
             height=430,
-            xaxis_title="Participación sobre las ofertas filtradas (%)",
-            yaxis_title=None,
+            xaxis_title="Ciudad",
+            yaxis_title="Participación (%)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font_color="#EDE9FE",
             margin=dict(
                 l=20,
-                r=50,
+                r=20,
                 t=20,
-                b=20,
+                b=70,
             ),
         )
 
-        figura_ciudades = aplicar_estilo_grafico(
-            figura_ciudades,
-            altura=430,
-        )
 
         st.plotly_chart(
             figura_ciudades,
@@ -657,6 +656,9 @@ if probar_conexion():
             height=430,
             xaxis_title="Salario promedio (USD)",
             yaxis_title=None,
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font_color="#EDE9FE",
             margin=dict(
                 l=20,
                 r=40,
@@ -666,10 +668,6 @@ if probar_conexion():
             showlegend=False,
         )
 
-        figura_salarios = aplicar_estilo_grafico(
-            figura_salarios,
-            altura=430,
-        )
         st.plotly_chart(
             figura_salarios,
             use_container_width=True,
@@ -727,6 +725,9 @@ if probar_conexion():
             height=430,
             xaxis_title="Periodo",
             yaxis_title="Número de ofertas",
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font_color="#EDE9FE",
             margin=dict(
                 l=20,
                 r=20,
@@ -743,12 +744,7 @@ if probar_conexion():
 
         figura_evolucion.update_yaxes(
             rangemode="tozero",
-            dtick=1,
-        )
-
-        figura_evolucion = aplicar_estilo_grafico(
-            figura_evolucion,
-            altura=430,
+            dtick=8,
         )
 
         st.plotly_chart(
