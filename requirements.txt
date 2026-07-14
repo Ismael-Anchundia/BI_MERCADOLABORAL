@@ -5,3 +5,7 @@ pandas
 lxml
 python-dateutil
 openpyxl
+streamlit
+plotly
+SQLAlchemy
+psycopg2-binary
