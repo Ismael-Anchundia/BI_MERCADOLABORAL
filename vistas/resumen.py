@@ -1,225 +1,8 @@
 import streamlit as st
 import plotly.express as px
 
-st.markdown(
-    """
-    <style>
-    /* Fondo principal */
-    .stApp {
-        background:
-            radial-gradient(
-                circle at top left,
-                rgba(139, 92, 246, 0.16),
-                transparent 32%
-            ),
-            linear-gradient(
-                135deg,
-                #100b1f 0%,
-                #160f2b 48%,
-                #0d0919 100%
-            );
-        color: #f8f7ff;
-    }
-
-    /* Contenedor principal */
-    .block-container {
-        padding-top: 2rem;
-        padding-bottom: 3rem;
-        max-width: 1500px;
-    }
-
-    /* Título principal */
-    h1 {
-        color: #f8fafc !important;
-        font-weight: 800 !important;
-        letter-spacing: -0.03em;
-    }
-
-    h1 span {
-        color: #ffffff;
-    }
-
-    /* Subtítulos */
-    h2, h3 {
-        color: #f8fafc !important;
-        font-weight: 700 !important;
-    }
-
-    /* Texto secundario */
-    [data-testid="stCaptionContainer"] {
-        color: #94a3b8 !important;
-    }
-
-    /* Sidebar */
-    [data-testid="stSidebar"] {
-        background: linear-gradient(
-            180deg,
-            #1b1232 0%,
-            #100b1f 100%
-        );
-        border-right: 1px solid rgba(196, 181, 253, 0.16);
-    }
-
-    [data-testid="stSidebar"] * {
-        color: #e2e8f0;
-    }
-
-    /* Navegación activa */
-    [data-testid="stSidebarNav"] a[aria-current="page"] {
-        background: linear-gradient(
-            90deg,
-            #6d28d9,
-            #8b5cf6
-        );
-        border-radius: 10px;
-    }
-
-    /* Selectbox */
-    div[data-baseweb="select"] > div {
-        background-color: #21183a !important;
-        border: 1px solid #493873 !important;
-        border-radius: 10px !important;
-        color: #f8f7ff !important;
-        min-height: 46px;
-    }
-
-    div[data-baseweb="select"] span {
-        color: #f8fafc !important;
-    }
-
-    /* Mensaje de conexión */
-    [data-testid="stAlert"] {
-        background-color: rgba(16, 185, 129, 0.10);
-        border: 1px solid rgba(16, 185, 129, 0.20);
-        border-radius: 10px;
-        color: #86efac;
-    }
-
-    /* Tarjetas KPI */
-    [data-testid="stMetric"] {
-        background: linear-gradient(
-            145deg,
-            #261b43,
-            #1b1432
-        );
-        border: 1px solid rgba(167, 139, 250, 0.24);
-        border-radius: 14px;
-        padding: 1.25rem 1rem;
-        box-shadow:
-            0 12px 32px rgba(5, 2, 15, 0.38),
-            inset 0 1px 0 rgba(255, 255, 255, 0.04);
-        min-height: 155px;
-        transition:
-            transform 0.2s ease,
-            border-color 0.2s ease;
-    }
-
-    [data-testid="stMetric"]:hover {
-        transform: translateY(-3px);
-        border-color: rgba(167, 139, 250, 0.60);
-    }
-
-    [data-testid="stMetricLabel"] {
-        color: #cbd5e1 !important;
-        font-size: 0.92rem;
-    }
-
-    [data-testid="stMetricValue"] {
-        color: #ffffff !important;
-        font-weight: 750 !important;
-    }
-
-    [data-testid="stMetricDelta"] {
-        color: #4ade80 !important;
-    }
-
-    /* Contenedor de gráficos */
-    [data-testid="stPlotlyChart"] {
-        background: transparent;
-        border: none;
-        padding: 0;
-        box-shadow: none;
-    }
-
-    /* Cajas informativas */
-    div[data-testid="stNotification"] {
-        border-radius: 10px;
-    }
-
-    /* Líneas divisorias */
-    hr {
-        border-color: rgba(148, 163, 184, 0.18);
-    }
-
-    /* Menú desplegable */
-    div[role="listbox"] {
-        background-color: #261b43 !important;
-        color: #f8f7ff !important;
-    }
-
-    div[role="option"]:hover {
-        background-color: #3b2863 !important;
-    }
-
-    div[role="option"]:hover {
-        background-color: #1e3a5f !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-def aplicar_estilo_grafico(
-    figura,
-    altura: int = 430,
-):
-    figura.update_layout(
-        height=altura,
-        title=None,
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(
-            color="#EDE9FE",
-            family="Arial",
-        ),
-        legend=dict(
-            font=dict(
-                color="#DDD6FE",
-            ),
-            title_font=dict(
-                color="#F5F3FF",
-            ),
-        ),
-        xaxis=dict(
-            gridcolor="rgba(196,181,253,0.12)",
-            linecolor="rgba(196,181,253,0.22)",
-            zerolinecolor="rgba(196,181,253,0.15)",
-            tickfont=dict(
-                color="#DDD6FE",
-            ),
-            title_font=dict(
-                color="#DDD6FE",
-            ),
-        ),
-        yaxis=dict(
-            gridcolor="rgba(196,181,253,0.12)",
-            linecolor="rgba(196,181,253,0.22)",
-            zerolinecolor="rgba(196,181,253,0.15)",
-            tickfont=dict(
-                color="#DDD6FE",
-            ),
-            title_font=dict(
-                color="#DDD6FE",
-            ),
-        ),
-        hoverlabel=dict(
-            bgcolor="#261B43",
-            bordercolor="#8B5CF6",
-            font_color="#F8F7FF",
-        ),
-    )
-
-    return figura
+import dashboard.estilos as estilos
+estilos.aplicar_estilos()
 
 from dashboard.conexion import probar_conexion
 from dashboard.consultas import (
@@ -287,11 +70,34 @@ if probar_conexion():
         "Conexión correcta con el Data Warehouse PostgreSQL."
     )
 
-    total_ofertas = obtener_total_ofertas()
-    salario_promedio = obtener_salario_promedio()
-    modalidad_principal, total_modalidad = obtener_modalidad_principal()
-    ciudad_lider, total_ciudad = obtener_ciudad_lider()
-    tecnologia_lider, total_tecnologia = obtener_tecnologia_lider()
+    total_ofertas = obtener_total_ofertas(
+    anio=anio_seleccionado,
+    pais=pais_seleccionado,
+    modalidad=modalidad_seleccionada,
+)
+
+    salario_promedio = obtener_salario_promedio(
+        anio=anio_seleccionado,
+        pais=pais_seleccionado,
+        modalidad=modalidad_seleccionada,
+    )
+
+    modalidad_principal, total_modalidad = obtener_modalidad_principal(
+        anio=anio_seleccionado,
+        pais=pais_seleccionado,
+    )
+
+    ciudad_lider, total_ciudad = obtener_ciudad_lider(
+        anio=anio_seleccionado,
+        pais=pais_seleccionado,
+        modalidad=modalidad_seleccionada,
+    )
+
+    tecnologia_lider, total_tecnologia = obtener_tecnologia_lider(
+        anio=anio_seleccionado,
+        pais=pais_seleccionado,
+        modalidad=modalidad_seleccionada,
+    )
 
     top_tecnologias = obtener_top_tecnologias(
         limite=10,
@@ -516,7 +322,6 @@ if probar_conexion():
                     border-radius:8px;
                     margin-top:8px;
                 ">
-                    <b>Insight:</b><br>
                     La modalidad predominante es
                     <b>{modalidad_principal_grafico}</b>,
                     representando
@@ -603,12 +408,25 @@ if probar_conexion():
             fila_ciudad_lider["porcentaje_participacion"]
         )
 
-        st.info(
-            f"La ciudad con mayor concentración de oportunidades es "
-            f"**{ciudad_lider_grafico}**, con "
-            f"**{total_ciudad_lider} ofertas**, equivalentes al "
-            f"**{porcentaje_ciudad_lider:.2f}%** del total filtrado."
-        )
+        st.markdown(
+        f"""
+        <div style="
+            padding:12px;
+            border-left:4px solid #8B5CF6;
+            background:rgba(139,92,246,0.08);
+            border-radius:8px;
+            margin-top:8px;
+        ">
+            La ciudad con mayor concentración de oportunidades es
+            <b>{ciudad_lider_grafico}</b>,
+            con <b>{total_ciudad_lider} ofertas</b>,
+            equivalentes al
+            <b>{porcentaje_ciudad_lider:.2f}%</b>
+            del total filtrado.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     st.markdown("---")
     st.subheader("Salario promedio por categoría de rol")
@@ -674,13 +492,25 @@ if probar_conexion():
         )
 
         rol_maximo = salarios_por_rol.iloc[-1]
-        st.success(
-            f"La categoría **{rol_maximo['categoria_rol']}** presenta "
-            f"el mayor salario promedio registrado "
-            f"(**${rol_maximo['salario_promedio']:.2f} USD**), "
-            f"calculado sobre "
-            f"**{rol_maximo['total_ofertas']} ofertas laborales**."
-        )
+        st.markdown(
+        f"""
+        <div style="
+            padding:12px;
+            border-left:4px solid #8B5CF6;
+            background:rgba(139,92,246,0.08);
+            border-radius:8px;
+            margin-top:8px;
+        ">
+            La categoría
+            <b>{rol_maximo['categoria_rol']}</b>
+            presenta el mayor salario promedio registrado
+            (<b>${rol_maximo['salario_promedio']:.2f} USD</b>),
+            calculado sobre
+            <b>{rol_maximo['total_ofertas']} ofertas laborales</b>.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     st.markdown("---")
     st.subheader("Evolución mensual de las ofertas laborales")
@@ -764,11 +594,24 @@ if probar_conexion():
             fila_periodo_maximo["total_ofertas"]
         )
 
-        st.info(
-            f"El periodo con mayor publicación de ofertas fue "
-            f"**{periodo_maximo}**, con un total de "
-            f"**{ofertas_maximas} ofertas laborales**."
-        )
+        st.markdown(
+        f"""
+        <div style="
+            padding:12px;
+            border-left:4px solid #8B5CF6;
+            background:rgba(139,92,246,0.08);
+            border-radius:8px;
+            margin-top:8px;
+        ">
+            <b>Insight:</b><br>
+            El periodo con mayor publicación de ofertas fue
+            <b>{periodo_maximo}</b>,
+            con un total de
+            <b>{ofertas_maximas} ofertas laborales</b>.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 else:
     st.error(

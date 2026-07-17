@@ -1,84 +1,9 @@
 import streamlit as st
 import plotly.express as px
 
-st.markdown(
-    """
-    <style>
-    /* Fondo principal */
-    .stApp {
-        background:
-            radial-gradient(
-                circle at top left,
-                rgba(139, 92, 246, 0.16),
-                transparent 32%
-            ),
-            linear-gradient(
-                135deg,
-                #100b1f 0%,
-                #160f2b 48%,
-                #0d0919 100%
-            );
-        color: #f8f7ff;
-    }
+from dashboard.estilos import aplicar_estilos
 
-    /* Selectbox */
-    div[data-baseweb="select"] > div {
-        background-color: #2a1d49 !important;
-        border: 1px solid #6d4fa3 !important;
-        border-radius: 10px !important;
-        color: #f8f7ff !important;
-        min-height: 46px;
-    }
-
-    div[data-baseweb="select"] span {
-        color: #f8f7ff !important;
-    }
-
-    /* Etiquetas de filtros */
-    label[data-testid="stWidgetLabel"] p {
-        color: #f8f7ff !important;
-        font-weight: 500 !important;
-    }
-
-    /* Menú desplegable */
-    div[role="listbox"] {
-        background-color: #261b43 !important;
-        color: #f8f7ff !important;
-    }
-
-    div[role="option"] {
-        color: #f8f7ff !important;
-    }
-
-    div[role="option"]:hover {
-        background-color: #3b2863 !important;
-    }
-
-    /* Gráficos transparentes */
-    [data-testid="stPlotlyChart"] {
-        background: transparent;
-        border: none;
-        padding: 0;
-        box-shadow: none;
-    }
-
-    /* Títulos */
-    h1, h2, h3 {
-        color: #f8fafc !important;
-    }
-
-    /* Texto secundario */
-    [data-testid="stCaptionContainer"] {
-        color: #94a3b8 !important;
-    }
-
-    hr {
-        border-color: rgba(148, 163, 184, 0.18);
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+aplicar_estilos()
 
 from dashboard.consultas import (
     obtener_anios_disponibles,

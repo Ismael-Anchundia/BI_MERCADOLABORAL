@@ -3,14 +3,48 @@ import pandas as pd
 from dashboard.conexion import ejecutar_consulta
 
 
-def obtener_total_ofertas() -> int:
-    consulta = """
-        SELECT COUNT(*) AS total_ofertas
-        FROM dw_ofertas.fact_ofertas_laborales;
+def obtener_total_ofertas(
+    anio=None,
+    pais=None,
+    modalidad=None,
+) -> int:
+    condiciones = []
+    parametros = {}
+
+    if anio not in (None, "Todos"):
+        condiciones.append("dti.anio = :anio")
+        parametros["anio"] = int(anio)
+
+    if pais not in (None, "Todos"):
+        condiciones.append("dc.pais = :pais")
+        parametros["pais"] = pais
+
+    if modalidad not in (None, "Todas"):
+        condiciones.append("dm.modalidad = :modalidad")
+        parametros["modalidad"] = modalidad
+
+    clausula_where = ""
+
+    if condiciones:
+        clausula_where = "WHERE " + " AND ".join(condiciones)
+
+    consulta = f"""
+        SELECT
+            COUNT(fo.id_hecho) AS total_ofertas
+        FROM dw_ofertas.fact_ofertas_laborales fo
+        JOIN dw_ofertas.dim_tiempo dti
+            ON fo.id_tiempo = dti.id_tiempo
+        JOIN dw_ofertas.dim_ciudad dc
+            ON fo.id_ciudad = dc.id_ciudad
+        JOIN dw_ofertas.dim_modalidad dm
+            ON fo.id_modalidad = dm.id_modalidad
+        {clausula_where};
     """
+
     resultado: pd.DataFrame = ejecutar_consulta(
         consulta,
         ttl=300,
+        params=parametros,
     )
 
     if resultado.empty:
@@ -18,42 +52,101 @@ def obtener_total_ofertas() -> int:
 
     return int(resultado.iloc[0]["total_ofertas"])
 
-def obtener_salario_promedio() -> float:
-    consulta = """
+def obtener_salario_promedio(
+    anio=None,
+    pais=None,
+    modalidad=None,
+) -> float:
+    condiciones = [
+        "fo.salario_usd IS NOT NULL",
+    ]
+    parametros = {}
+
+    if anio not in (None, "Todos"):
+        condiciones.append("dti.anio = :anio")
+        parametros["anio"] = int(anio)
+
+    if pais not in (None, "Todos"):
+        condiciones.append("dc.pais = :pais")
+        parametros["pais"] = pais
+
+    if modalidad not in (None, "Todas"):
+        condiciones.append("dm.modalidad = :modalidad")
+        parametros["modalidad"] = modalidad
+
+    clausula_where = "WHERE " + " AND ".join(condiciones)
+
+    consulta = f"""
         SELECT
-            ROUND(AVG(salario_usd), 2) AS salario_promedio
-        FROM dw_ofertas.fact_ofertas_laborales
-        WHERE salario_usd IS NOT NULL;
+            ROUND(
+                AVG(fo.salario_usd),
+                2
+            ) AS salario_promedio
+        FROM dw_ofertas.fact_ofertas_laborales fo
+        JOIN dw_ofertas.dim_tiempo dti
+            ON fo.id_tiempo = dti.id_tiempo
+        JOIN dw_ofertas.dim_ciudad dc
+            ON fo.id_ciudad = dc.id_ciudad
+        JOIN dw_ofertas.dim_modalidad dm
+            ON fo.id_modalidad = dm.id_modalidad
+        {clausula_where};
     """
 
     resultado: pd.DataFrame = ejecutar_consulta(
         consulta,
         ttl=300,
+        params=parametros,
     )
 
-    if resultado.empty or pd.isna(
-        resultado.iloc[0]["salario_promedio"]
+    if (
+        resultado.empty
+        or pd.isna(resultado.iloc[0]["salario_promedio"])
     ):
         return 0.0
 
     return float(resultado.iloc[0]["salario_promedio"])
 
 
-def obtener_modalidad_principal() -> tuple[str, int]:
-    consulta = """
+def obtener_modalidad_principal(
+    anio=None,
+    pais=None,
+) -> tuple[str, int]:
+    condiciones = [
+        "dm.modalidad <> 'No especificado'",
+    ]
+    parametros = {}
+
+    if anio not in (None, "Todos"):
+        condiciones.append("dti.anio = :anio")
+        parametros["anio"] = int(anio)
+
+    if pais not in (None, "Todos"):
+        condiciones.append("dc.pais = :pais")
+        parametros["pais"] = pais
+
+    clausula_where = "WHERE " + " AND ".join(condiciones)
+
+    consulta = f"""
         SELECT
             dm.modalidad,
             COUNT(fo.id_hecho) AS total_ofertas
         FROM dw_ofertas.fact_ofertas_laborales fo
         JOIN dw_ofertas.dim_modalidad dm
             ON fo.id_modalidad = dm.id_modalidad
+        JOIN dw_ofertas.dim_tiempo dti
+            ON fo.id_tiempo = dti.id_tiempo
+        JOIN dw_ofertas.dim_ciudad dc
+            ON fo.id_ciudad = dc.id_ciudad
+        {clausula_where}
         GROUP BY dm.modalidad
         ORDER BY total_ofertas DESC
         LIMIT 1;
     """
+
     resultado: pd.DataFrame = ejecutar_consulta(
         consulta,
         ttl=300,
+        params=parametros,
     )
 
     if resultado.empty:
@@ -64,16 +157,42 @@ def obtener_modalidad_principal() -> tuple[str, int]:
 
     return modalidad, total
 
-def obtener_ciudad_lider() -> tuple[str, int]:
-    consulta = """
+def obtener_ciudad_lider(
+    anio=None,
+    pais=None,
+    modalidad=None,
+) -> tuple[str, int]:
+    condiciones = [
+        "dc.ciudad <> 'No especificado'",
+    ]
+    parametros = {}
+
+    if anio not in (None, "Todos"):
+        condiciones.append("dti.anio = :anio")
+        parametros["anio"] = int(anio)
+
+    if pais not in (None, "Todos"):
+        condiciones.append("dc.pais = :pais")
+        parametros["pais"] = pais
+
+    if modalidad not in (None, "Todas"):
+        condiciones.append("dm.modalidad = :modalidad")
+        parametros["modalidad"] = modalidad
+
+    clausula_where = "WHERE " + " AND ".join(condiciones)
+
+    consulta = f"""
         SELECT
             dc.ciudad,
             COUNT(fo.id_hecho) AS total_ofertas
         FROM dw_ofertas.fact_ofertas_laborales fo
         JOIN dw_ofertas.dim_ciudad dc
             ON fo.id_ciudad = dc.id_ciudad
-        WHERE dc.pais = 'Ecuador'
-          AND dc.ciudad <> 'No especificado'
+        JOIN dw_ofertas.dim_tiempo dti
+            ON fo.id_tiempo = dti.id_tiempo
+        JOIN dw_ofertas.dim_modalidad dm
+            ON fo.id_modalidad = dm.id_modalidad
+        {clausula_where}
         GROUP BY dc.ciudad
         ORDER BY total_ofertas DESC
         LIMIT 1;
@@ -82,6 +201,7 @@ def obtener_ciudad_lider() -> tuple[str, int]:
     resultado: pd.DataFrame = ejecutar_consulta(
         consulta,
         ttl=300,
+        params=parametros,
     )
 
     if resultado.empty:
@@ -92,16 +212,45 @@ def obtener_ciudad_lider() -> tuple[str, int]:
 
     return ciudad, total
 
-def obtener_tecnologia_lider() -> tuple[str, int]:
-    consulta = """
+def obtener_tecnologia_lider(
+    anio=None,
+    pais=None,
+    modalidad=None,
+) -> tuple[str, int]:
+    condiciones = [
+        "dtec.nombre_tecnologia <> 'No especificado'",
+    ]
+    parametros = {}
+
+    if anio not in (None, "Todos"):
+        condiciones.append("dti.anio = :anio")
+        parametros["anio"] = int(anio)
+
+    if pais not in (None, "Todos"):
+        condiciones.append("dc.pais = :pais")
+        parametros["pais"] = pais
+
+    if modalidad not in (None, "Todas"):
+        condiciones.append("dm.modalidad = :modalidad")
+        parametros["modalidad"] = modalidad
+
+    clausula_where = "WHERE " + " AND ".join(condiciones)
+
+    consulta = f"""
         SELECT
-            dt.nombre_tecnologia,
+            dtec.nombre_tecnologia,
             COUNT(fo.id_hecho) AS total_menciones
         FROM dw_ofertas.fact_ofertas_laborales fo
-        JOIN dw_ofertas.dim_tecnologia dt
-            ON fo.id_tecnologia = dt.id_tecnologia
-        WHERE dt.nombre_tecnologia <> 'No especificado'
-        GROUP BY dt.nombre_tecnologia
+        JOIN dw_ofertas.dim_tecnologia dtec
+            ON fo.id_tecnologia = dtec.id_tecnologia
+        JOIN dw_ofertas.dim_tiempo dti
+            ON fo.id_tiempo = dti.id_tiempo
+        JOIN dw_ofertas.dim_ciudad dc
+            ON fo.id_ciudad = dc.id_ciudad
+        JOIN dw_ofertas.dim_modalidad dm
+            ON fo.id_modalidad = dm.id_modalidad
+        {clausula_where}
+        GROUP BY dtec.nombre_tecnologia
         ORDER BY total_menciones DESC
         LIMIT 1;
     """
@@ -109,13 +258,18 @@ def obtener_tecnologia_lider() -> tuple[str, int]:
     resultado: pd.DataFrame = ejecutar_consulta(
         consulta,
         ttl=300,
+        params=parametros,
     )
 
     if resultado.empty:
         return "No disponible", 0
 
-    tecnologia = str(resultado.iloc[0]["nombre_tecnologia"])
-    total = int(resultado.iloc[0]["total_menciones"])
+    tecnologia = str(
+        resultado.iloc[0]["nombre_tecnologia"]
+    )
+    total = int(
+        resultado.iloc[0]["total_menciones"]
+    )
 
     return tecnologia, total
 

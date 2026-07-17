@@ -1,7 +1,7 @@
 ﻿timestamp,fuente,tipo_error,descripcion,accion_tomada
-2026-07-03 00:39:17,multitrabajos,Nulo crítico,Campo url_oferta nulo en 11 registros.,Registros marcados para revisión o eliminación antes del DW.
-2026-07-03 00:39:17,multitrabajos,Fecha no interpretada,Fecha no normalizada en 11 registros.,Se mantiene como pendiente por falta de patrón reconocible.
-2026-07-03 00:39:17,computrabajo_ec,Salario no publicado,Salario no disponible en 9 registros.,Se mantiene nulo porque la fuente no publica el dato.
-2026-07-03 00:39:17,computrabajo_pe,Salario no publicado,Salario no disponible en 15 registros.,Se mantiene nulo porque la fuente no publica el dato.
-2026-07-03 00:39:17,multitrabajos,Salario no publicado,Salario no disponible en 11 registros.,Se mantiene nulo porque la fuente no publica el dato.
-2026-07-03 00:39:17,trabajosdiarios,Salario no publicado,Salario no disponible en 22 registros.,Se mantiene nulo porque la fuente no publica el dato.
+2026-07-17 01:25:26,multitrabajos,Nulo crítico,Campo url_oferta nulo en 11 registros.,Registros marcados para revisión o eliminación antes del DW.
+2026-07-17 01:25:26,multitrabajos,Fecha no interpretada,Fecha no normalizada en 11 registros.,Se mantiene como pendiente por falta de patrón reconocible.
+2026-07-17 01:25:26,computrabajo_ec,Salario no publicado,Salario no disponible en 9 registros.,Se mantiene nulo porque la fuente no publica el dato.
+2026-07-17 01:25:26,computrabajo_pe,Salario no publicado,Salario no disponible en 15 registros.,Se mantiene nulo porque la fuente no publica el dato.
+2026-07-17 01:25:26,multitrabajos,Salario no publicado,Salario no disponible en 11 registros.,Se mantiene nulo porque la fuente no publica el dato.
+2026-07-17 01:25:26,trabajosdiarios,Salario no publicado,Salario no disponible en 22 registros.,Se mantiene nulo porque la fuente no publica el dato.

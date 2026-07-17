@@ -1,5 +1,11 @@
 import streamlit as st
 
+from dashboard import estilos
+from dashboard.estilos import (
+    mostrar_insight,
+)
+estilos.aplicar_estilos()
+
 from dashboard.consultas import (
     obtener_total_ofertas,
     obtener_salario_promedio,
@@ -93,30 +99,33 @@ with columna_6:
 st.markdown("---")
 st.markdown("## Interpretación ejecutiva")
 
-st.info(
+mostrar_insight(
     f"La tecnología con mayor presencia en el conjunto analizado es "
-    f"**{tecnologia_lider}**, con **{total_tecnologia} menciones**."
+    f"<b>{tecnologia_lider}</b>, con "
+    f"<b>{total_tecnologia} menciones</b>."
 )
 
-st.info(
+mostrar_insight(
     f"La mayor concentración geográfica de oportunidades se encuentra en "
-    f"**{ciudad_lider}**, con **{total_ciudad} ofertas laborales**."
+    f"<b>{ciudad_lider}</b>, con "
+    f"<b>{total_ciudad} ofertas laborales</b>."
 )
 
-st.info(
-    f"La modalidad predominante es **{modalidad_principal}**, "
-    f"con **{total_modalidad} ofertas registradas**."
+mostrar_insight(
+    f"La modalidad predominante es "
+    f"<b>{modalidad_principal}</b>, con "
+    f"<b>{total_modalidad} ofertas registradas</b>."
 )
 
-st.info(
+mostrar_insight(
     f"La categoría con mayor remuneración promedio es "
-    f"**{rol_mejor_pagado}**, con un salario medio de "
-    f"**${salario_rol:,.2f} USD**, calculado sobre "
-    f"**{ofertas_rol} ofertas con información salarial**."
+    f"<b>{rol_mejor_pagado}</b>, con un salario medio de "
+    f"<b>${salario_rol:,.2f} USD</b>, calculado sobre "
+    f"<b>{ofertas_rol} ofertas con información salarial</b>."
 )
 
-st.info(
+mostrar_insight(
     f"El mayor crecimiento mensual se registró en "
-    f"**{periodo_crecimiento}**, con una variación de "
-    f"**{crecimiento_maximo:.2f}%** respecto al mes anterior."
+    f"<b>{periodo_crecimiento}</b>, con una variación de "
+    f"<b>{crecimiento_maximo:.2f}%</b> respecto al mes anterior."
 )
